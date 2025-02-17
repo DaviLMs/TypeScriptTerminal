@@ -53,11 +53,4 @@ Durante a execução do chat, você pode usar os seguintes comandos:
     /soma: Realiza a soma de dois números fornecidos pelo usuário.
     /subtracao: Realiza a subtração entre dois números fornecidos pelo usuário.
 
-Contribuindo
-
-Se você quiser contribuir para este projeto, sinta-se à vontade para abrir uma issue ou enviar um pull request. Fico feliz em receber sugestões de melhorias!
-Licença
-
-Este projeto está licenciado sob a MIT License - veja o arquivo LICENSE para mais detalhes.
-
 Obrigado por usar o meu chat! 😄
