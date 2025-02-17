@@ -22,7 +22,7 @@ Siga os passos abaixo para clonar o repositório:
 
     Clone o repositório usando o comando git:
 
-    git clone https://github.com/seu-usuario/nome-do-repositorio.git
+    git clone https://github.com/DaviLMs/TypeScriptTerminal.git
 
 Instalando Dependências
 
