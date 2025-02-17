@@ -17,7 +17,7 @@ function iniciar(): void {
             rl.question('Gostaria de ver uma lista de comandos? (s/n): ', (resposta: string) => {
                 if (resposta.toLowerCase() === 's') {
                     console.log('Comandos disponíveis: /ajuda, /sair, /sobre, /soma, /subtracao');
-                }
+                };
 
                 rl.question('Digite um comando: ', (comando: string) => {
                     switch (comando.toLowerCase()) {
