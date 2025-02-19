@@ -5,91 +5,108 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 
-function iniciar(): void {
-    console.log('Iniciando conversa...');
 
-    rl.question('Digite seu nome: ', (nome: string) => {
-        console.log(`Olá, ${nome}! Bem-vindo ao meu chat.`);
 
-        rl.question('Digite seu sobrenome: ', (sobrenome: string) => {
-            console.log(`Seu nome é ${nome} ${sobrenome}.`);
-
-            rl.question('Gostaria de ver uma lista de comandos? (s/n): ', (resposta: string) => {
-                if (resposta.toLowerCase() === 's') {
-                    console.log('Comandos disponíveis: /ajuda, /sair, /sobre, /soma, /subtracao, /vezes');
-                };
-
-                rl.question('Digite um comando: ', (comando: string) => {
-                    switch (comando.toLowerCase()) {
-                        case '/ajuda':
-                            console.log('Comandos disponíveis: /ajuda, /sair, /sobre, /soma, /subtracao, /vezes');
-                            break;
-                        
-                        case '/sair':
-                            console.log('Saindo do chat...');
-                            rl.close(); 
-                            break;
-
-                        case '/sobre':
-                            console.log('Aplicação feita pelo Davi Lamarca');
-                            iniciar()
-
-                            break;
-                        
-                        case '/soma':
-                            rl.question('Digite o Primeiro número: ', (num1: string) => {
-                                rl.question('Digite o Segundo número: ', (num2: string) => {
-                                    const resultadoSoma = Number(num1) + Number(num2);
-                                    if (!isNaN(resultadoSoma)) {
-                                        console.log(`Resultado da soma: ${resultadoSoma}`);
-                                    } else {
-                                        console.log('Por favor, insira números válidos.');
-                                    }
-                                });
-                            });
-                            iniciar()
-
-                            break;
-                            case '/vezes':
-                                rl.question('digite um numero:' , (num1: String) => {
-                                    rl.question('Digite o outro numero: ', (num2: String) => {
-                                        const resultadoVezes = Number(num1) * Number(num2)
-                                        if (!isNaN(resultadoVezes)) {
-                                            console.log(`Resultado vezes' ${resultadoVezes}`);
-                                        } else {
-                                            console.log('Por favor, insira um numero valido');
-                                            
-                                        }
-                                     })
-                                })            
-                                iniciar()
-
-                            break
-                        case '/subtracao':
-                            rl.question('Digite o primeiro número: ', (num1: string) => {
-                                rl.question('Digite o segundo número: ', (num2: string) => {
-                                    const resultadoSubtracao = Number(num1) - Number(num2);
-                                    if (!isNaN(resultadoSubtracao)) {
-                                        console.log(`Resultado da subtração: ${resultadoSubtracao}`);
-                                    } else {
-                                        console.log('Por favor, insira números válidos.');
-                                    }
-                                });
-                            });
-                            iniciar()
-
-                            break;
-            
-                        default:
-                            console.log('Comando não encontrado.');
-                            iniciar()
-                           
-                            break;
-                    }
-                });
-            });
+function solicitarNome() {
+    rl.question('Digite seu nome: ', (nome) => {
+        rl.question('Digite seu sobrenome: ', (sobrenome) => {
+            console.clear();
+            console.log(`Olá, ${nome} ${sobrenome}! Bem-vindo ao meu chat.`);
+            exibirMenu();
         });
     });
 }
 
-iniciar();
+function exibirMenu() {
+    console.clear();
+    rl.question('Gostaria de ver uma lista de comandos? (s/n): ', (resposta) => {
+        if (resposta.toLowerCase() === 's') {
+            listarComandos();
+        }
+        processarComando();
+    });
+}
+
+function listarComandos() {
+    console.log('Comandos disponíveis: /ajuda, /sair, /sobre, /soma, /subtracao, /vezes, /for');
+}
+
+function processarComando() {
+    rl.question('Digite um comando: ', (comando) => {
+        switch (comando.toLowerCase()) {
+            case '/ajuda':
+                listarComandos();
+                processarComando();
+                break;
+
+            case '/sair':
+                console.clear();
+                console.log('Saindo do chat...');
+                rl.close();
+                break;
+
+            case '/sobre':
+                console.clear();
+                console.log('Aplicação feita pelo Davi Lamarca');
+                processarComando();
+                break;
+
+            case '/soma':
+                calcularOperacao('soma', (a, b) => a + b);
+                break;
+
+            case '/subtracao':
+                calcularOperacao('subtração', (a, b) => a - b);
+                break;
+
+            case '/vezes':
+                calcularOperacao('multiplicação', (a, b) => a * b);
+                break;
+            case '/for': 
+                forzinho()
+                break
+            default:
+                console.clear();
+                console.log('Comando não encontrado.');
+                processarComando();
+                break;
+        }
+    });
+}
+
+function forzinho() {
+    rl.question('Digite um número: ', (resposta: string) => {
+        const numero = Number(resposta);
+        
+        if (numero > 1000) { 
+            console.log('Número muito longo, sujeito a travamento.');
+            rl.close();
+        } else {
+            for (let i = 0; i < numero; i++) {
+                console.log(i);
+            }
+            rl.close();
+        }
+    });
+}
+
+
+function calcularOperacao(nome: string, operacao: (a: number, b: number) => number) {
+    console.clear();
+    rl.question('Digite o primeiro número: ', (num1) => {
+        rl.question('Digite o segundo número: ', (num2) => {
+            console.clear();
+            const n1 = Number(num1);
+            const n2 = Number(num2);
+
+            if (isNaN(n1) || isNaN(n2)) {
+                console.log('Por favor, insira números válidos.');
+            } else {
+                console.log(`Resultado da ${nome}: ${operacao(n1, n2)}`);
+            }
+            processarComando();
+        });
+    });
+}
+
+solicitarNome();
