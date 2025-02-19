@@ -88,7 +88,8 @@ function forzinho() {
             rl.close();
         }
     });
-}
+} 
+
 
 
 function calcularOperacao(nome: string, operacao: (a: number, b: number) => number) {
