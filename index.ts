@@ -28,7 +28,7 @@ function exibirMenu() {
 }
 
 function listarComandos() {
-    console.log('Comandos disponíveis: /ajuda, /sair, /sobre, /soma, /subtracao, /vezes, /for');
+    console.log('Comandos disponíveis: /ajuda, /sair, /sobre, /soma, /subtracao, /vezes, /for, /horario, /clear');
 }
 
 function processarComando() {
@@ -62,11 +62,17 @@ function processarComando() {
             case '/vezes':
                 calcularOperacao('multiplicação', (a, b) => a * b);
                 break;
-            case '/for': 
+            case '/for':
                 forzinho()
                 break
+            case '/horario':
+                horario()
+                break
+            case '/clear':
+                console.clear()
+                processarComando()
+                break
             default:
-                console.clear();
                 console.log('Comando não encontrado.');
                 processarComando();
                 break;
@@ -77,8 +83,8 @@ function processarComando() {
 function forzinho() {
     rl.question('Digite um número: ', (resposta: string) => {
         const numero = Number(resposta);
-        
-        if (numero > 1000) { 
+
+        if (numero > 1000) {
             console.log('Número muito longo, sujeito a travamento.');
             rl.close();
         } else {
@@ -88,8 +94,20 @@ function forzinho() {
             rl.close();
         }
     });
-} 
+}
 
+function horario() {
+    const data = new Date().getHours()
+    console.log(data);
+    if (data < 12) {
+        console.log('Bom dia');
+    } else if (data < 18) {
+        console.log("Boa tarde");
+    } else {
+        console.log("Boa noite");
+    }
+    processarComando()
+}
 
 
 function calcularOperacao(nome: string, operacao: (a: number, b: number) => number) {
