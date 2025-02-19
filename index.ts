@@ -16,13 +16,13 @@ function iniciar(): void {
 
             rl.question('Gostaria de ver uma lista de comandos? (s/n): ', (resposta: string) => {
                 if (resposta.toLowerCase() === 's') {
-                    console.log('Comandos disponíveis: /ajuda, /sair, /sobre, /soma, /subtracao');
+                    console.log('Comandos disponíveis: /ajuda, /sair, /sobre, /soma, /subtracao, /vezes');
                 };
 
                 rl.question('Digite um comando: ', (comando: string) => {
                     switch (comando.toLowerCase()) {
                         case '/ajuda':
-                            console.log('Comandos disponíveis: /ajuda, /sair, /sobre, /soma, /subtracao');
+                            console.log('Comandos disponíveis: /ajuda, /sair, /sobre, /soma, /subtracao, /vezes');
                             break;
                         
                         case '/sair':
@@ -32,6 +32,8 @@ function iniciar(): void {
 
                         case '/sobre':
                             console.log('Aplicação feita pelo Davi Lamarca');
+                            iniciar()
+
                             break;
                         
                         case '/soma':
@@ -45,8 +47,24 @@ function iniciar(): void {
                                     }
                                 });
                             });
+                            iniciar()
+
                             break;
-                        
+                            case '/vezes':
+                                rl.question('digite um numero:' , (num1: String) => {
+                                    rl.question('Digite o outro numero: ', (num2: String) => {
+                                        const resultadoVezes = Number(num1) * Number(num2)
+                                        if (!isNaN(resultadoVezes)) {
+                                            console.log(`Resultado vezes' ${resultadoVezes}`);
+                                        } else {
+                                            console.log('Por favor, insira um numero valido');
+                                            
+                                        }
+                                     })
+                                })            
+                                iniciar()
+
+                            break
                         case '/subtracao':
                             rl.question('Digite o primeiro número: ', (num1: string) => {
                                 rl.question('Digite o segundo número: ', (num2: string) => {
@@ -58,10 +76,14 @@ function iniciar(): void {
                                     }
                                 });
                             });
+                            iniciar()
+
                             break;
-                        
+            
                         default:
                             console.log('Comando não encontrado.');
+                            iniciar()
+                           
                             break;
                     }
                 });
