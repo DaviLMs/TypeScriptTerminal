@@ -84,14 +84,14 @@ function forzinho() {
     rl.question('Digite um número: ', (resposta: string) => {
         const numero = Number(resposta);
 
-        if (numero > 1000) {
+        if (numero > 10000) {
             console.log('Número muito longo, sujeito a travamento.');
             rl.close();
         } else {
             for (let i = 0; i < numero; i++) {
                 console.log(i);
             }
-            rl.close();
+            processarComando()
         }
     });
 }
@@ -129,3 +129,5 @@ function calcularOperacao(nome: string, operacao: (a: number, b: number) => numb
 }
 
 solicitarNome();
+
+                                                                    
