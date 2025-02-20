@@ -17,7 +17,7 @@ function exibirMenu() {
 }
 
 function listarComandos() {
-    console.log('Comandos disponíveis: /ajuda, /sair, /sobre, /soma, /subtracao, /vezes, /for, /horario, /clear, /apiUsers, /apiProduts');
+    console.log('Comandos disponíveis: /ajuda, /sair, /sobre, /soma, /subtracao, /vezes, /for, /horario, /clear, /produts, /users');
 }
 
 function processarComando() {
@@ -68,6 +68,10 @@ function processarComando() {
             case '/produts': 
                 apiProduts(); 
                 break;
+            case '/todos': 
+                apiTodos()
+                processarComando()
+                break
             default:
                 console.log('Comando não encontrado.');
                 processarComando();
@@ -152,4 +156,10 @@ function apiProduts() {
     });
 }
 
+function apiTodos() {
+    axios.get('https://dummyjson.com/comments').then(response => {
+        const todos = response.data
+        console.log(todos);
+    })
+}
 exibirMenu();
