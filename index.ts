@@ -1,21 +1,10 @@
+import axios from 'axios';
 import * as readline from 'readline';
 
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
 });
-
-
-
-function solicitarNome() {
-    rl.question('Digite seu nome: ', (nome) => {
-        rl.question('Digite seu sobrenome: ', (sobrenome) => {
-            console.clear();
-            console.log(`Olá, ${nome} ${sobrenome}! Bem-vindo ao meu chat.`);
-            exibirMenu();
-        });
-    });
-}
 
 function exibirMenu() {
     console.clear();
@@ -28,7 +17,7 @@ function exibirMenu() {
 }
 
 function listarComandos() {
-    console.log('Comandos disponíveis: /ajuda, /sair, /sobre, /soma, /subtracao, /vezes, /for, /horario, /clear');
+    console.log('Comandos disponíveis: /ajuda, /sair, /sobre, /soma, /subtracao, /vezes, /for, /horario, /clear, /apiUsers, /apiProduts');
 }
 
 function processarComando() {
@@ -63,15 +52,22 @@ function processarComando() {
                 calcularOperacao('multiplicação', (a, b) => a * b);
                 break;
             case '/for':
-                forzinho()
-                break
+                forzinho();
+                break;
             case '/horario':
-                horario()
-                break
+                horario();
+                break;
             case '/clear':
-                console.clear()
-                processarComando()
-                break
+                console.clear();
+                processarComando();
+                break;
+            case '/users':
+                ApiUsers();
+                processarComando();
+                break;
+            case '/produts': 
+                apiProduts(); 
+                break;
             default:
                 console.log('Comando não encontrado.');
                 processarComando();
@@ -79,6 +75,7 @@ function processarComando() {
         }
     });
 }
+
 
 function forzinho() {
     rl.question('Digite um número: ', (resposta: string) => {
@@ -109,7 +106,6 @@ function horario() {
     processarComando()
 }
 
-
 function calcularOperacao(nome: string, operacao: (a: number, b: number) => number) {
     console.clear();
     rl.question('Digite o primeiro número: ', (num1) => {
@@ -128,6 +124,32 @@ function calcularOperacao(nome: string, operacao: (a: number, b: number) => numb
     });
 }
 
-solicitarNome();
+function ApiUsers() {
+    axios.get('https://dummyjson.com/users').then(resposta => {
+        const users = resposta.data.users;
+        console.log('Lista de usuários:');
+        users.forEach((user: any, index: number) => {
+            console.log(`${index + 1}. ${user.firstName} ${user.lastName} - ${user.email}`);
+        });
+        processarComando();
+    }).catch(error => {
+        console.log('Erro ao obter dados dos usuários:', error.message);
+        processarComando();
+    });
+}
 
-                                                                    
+function apiProduts() {
+    axios.get('https://dummyjson.com/products').then(resposta => {
+        const products = resposta.data.products;
+        console.log('Lista de produtos:');
+        products.forEach((product: any, index: number) => {
+            console.log(`${index + 1}. ${product.title} - ${product.price} USD`);
+        });
+        processarComando();
+    }).catch(error => {
+        console.log('Erro ao obter dados dos produtos:', error.message);
+        processarComando();
+    });
+}
+
+exibirMenu();
