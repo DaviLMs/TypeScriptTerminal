@@ -104,7 +104,7 @@ function algoritimo() {
     for (let i = 0; i < 100; i++){
         setTimeout(() => {
             console.clear()
-            axios.get('https://dummyjson.com/users').then(resposta => {
+            axios.get('https://dummyjson.com/c/3029-d29f-4014-9fb4').then(resposta => {
                 const users = resposta.data.users;
                 console.log('Lista de usuários:');
                 users.forEach((user: any, index: number) => {
