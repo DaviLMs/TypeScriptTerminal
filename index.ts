@@ -17,65 +17,67 @@ function exibirMenu() {
 }
 
 function listarComandos() {
-    console.log('/ajuda, /sair, /sobre, /soma, /subtracao, /vezes, /for, /horario, /clear, /produts, /users, /usersfor');
+    console.log('help, exit, sb, +, -, *, for, hr, clear, produts, coments, users, usersfor');
 }
 
 function processarComando() {
     rl.question('Digite um comando: ', (comando) => {
         switch (comando.toLowerCase()) {
-            case '/ajuda':
+            case 'help':
                 listarComandos();
                 processarComando();
                 break;
 
-            case '/sair':
+            case 'exit':
                 console.clear();
                 console.log('Saindo do chat...');
                 rl.close();
                 break;
 
-            case '/sobre':
+            case 'sb':
                 console.clear();
                 console.log('Aplicação feita pelo Davi Lamarca');
                 processarComando();
                 break;
 
-            case '/soma':
+            case '+':
                 calcularOperacao('soma', (a, b) => a + b);
                 break;
 
-            case '/subtracao':
+            case '-':
                 calcularOperacao('subtração', (a, b) => a - b);
                 break;
 
-            case '/vezes':
+            case '*':
                 calcularOperacao('multiplicação', (a, b) => a * b);
                 break;
-            case '/for':
+            case 'for':
                 forzinho();
                 break;
-            case '/horario':
+            case 'hr':
                 horario();
                 break;
-            case '/clear':
+            case 'clear':
                 console.clear();
                 processarComando();
                 break;
-            case '/users':
+            case 'users':
                 ApiUsers();
                 processarComando();
                 break;
-            case '/produts': 
+            case 'produts': 
                 apiProduts(); 
+                processarComando()
                 break;
-            case '/todos': 
+            case 'coments': 
                 apiTodos()
                 processarComando()
                 break
-            case '/usersfor':
+            case 'usersfor':
                 algoritimo()
+                processarComando()
                 break
-            default:
+            default:    
                 console.log('Comando não encontrado.');
                 processarComando();
                 break;
@@ -152,6 +154,10 @@ function calcularOperacao(nome: string, operacao: (a: number, b: number) => numb
 }
 
 function ApiUsers() {
+
+    console.log("\x1b[31m---------Fazendo requisição!---------\x1b[0m");
+
+
     axios.get('https://dummyjson.com/users').then(resposta => {
         const users = resposta.data.users;
         console.log('Lista de usuários:');
@@ -166,6 +172,8 @@ function ApiUsers() {
 }
 
 function apiProduts() {
+    console.log("\x1b[31m---------Fazendo requisição!---------\x1b[0m");
+    
     axios.get('https://dummyjson.com/products').then(resposta => {
         const products = resposta.data.products;
         console.log('Lista de produtos:');
@@ -180,10 +188,10 @@ function apiProduts() {
 }
 
 function apiTodos() {
+    console.log("\x1b[31m---------Fazendo requisição!---------\x1b[0m");
     axios.get('https://dummyjson.com/comments').then(response => {
         const todos = response.data
         console.log(todos);
     })
 }
 exibirMenu();
-
