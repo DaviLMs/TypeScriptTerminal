@@ -17,7 +17,7 @@ function exibirMenu() {
 }
 
 function listarComandos() {
-    console.log('Comandos disponíveis: /ajuda, /sair, /sobre, /soma, /subtracao, /vezes, /for, /horario, /clear, /produts, /users');
+    console.log('/ajuda, /sair, /sobre, /soma, /subtracao, /vezes, /for, /horario, /clear, /produts, /users, /usersfor');
 }
 
 function processarComando() {
@@ -72,6 +72,9 @@ function processarComando() {
                 apiTodos()
                 processarComando()
                 break
+            case '/usersfor':
+                algoritimo()
+                break
             default:
                 console.log('Comando não encontrado.');
                 processarComando();
@@ -95,6 +98,26 @@ function forzinho() {
             processarComando()
         }
     });
+}
+
+function algoritimo() {
+    for (let i = 0; i < 100; i++){
+        setTimeout(() => {
+            console.clear()
+            axios.get('https://dummyjson.com/users').then(resposta => {
+                const users = resposta.data.users;
+                console.log('Lista de usuários:');
+                users.forEach((user: any, index: number) => {
+                    console.log(`${index + 1}. ${user.firstName} ${user.lastName} - ${user.email}`);
+                });
+                console.log("\x1b[31m---------Atualizando pessoas a cada 10 segundos!---------\x1b[0m");
+                processarComando();
+            }).catch(error => {
+                console.log('Erro ao obter dados dos usuários:', error.message);
+                processarComando();
+            });
+        }, i  * 10000)
+    }
 }
 
 function horario() {
@@ -163,3 +186,4 @@ function apiTodos() {
     })
 }
 exibirMenu();
+
